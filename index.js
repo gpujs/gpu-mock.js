@@ -1,6 +1,6 @@
 'use strict';
 
-export function mock1D() {
+function mock1D() {
   const row = [];
   for (let x = 0; x < this.output.x; x++) {
     this.thread.x = x;
@@ -11,8 +11,8 @@ export function mock1D() {
   return row;
 }
 
-export function mock2D() {
-  const rows = [];
+function mock2D() {
+  const matrix = [];
   for (let y = 0; y < this.output.y; y++) {
     const row = [];
     for (let x = 0; x < this.output.x; x++) {
@@ -21,38 +21,39 @@ export function mock2D() {
       this.thread.z = 0;
       row.push(this._fn.apply(this, arguments));
     }
-    rows.push(row);
+    matrix.push(row);
   }
-  return rows;
+  return matrix;
 }
 
-export function mock3D() {
-  const grid = [];
-  for (let z = 0; z < outputZ; z++) {
-    const rows = [];
-    for (let y = 0; y < outputY; y++) {
+function mock3D() {
+  const cube = [];
+  for (let z = 0; z < this.output.z; z++) {
+    const matrix = [];
+    for (let y = 0; y < this.output.y; y++) {
       const row = [];
-      for (let x = 0; x < outputX; x++) {
+      for (let x = 0; x < this.output.x; x++) {
         this.thread.x = x;
         this.thread.y = y;
         this.thread.z = z;
         row.push(this._fn.apply(this, arguments));
       }
-      rows.push(row);
+      matrix.push(row);
     }
+    cube.push(matrix);
   }
-  return grid;
+  return cube;
 }
 
-export default function gpuMock(fn, options) {
+module.exports = function gpuMock(fn, options) {
   let contextOutput = null;
   if (options.output.length) {
-    if (options.length === 3) {
-      contextOutput = { x: options[0], y: options[1], z: options[2] };
-    } else if (options.length === 2) {
-      contextOutput = { x: options[0], y: options[1] };
+    if (options.output.length === 3) {
+      contextOutput = { x: options.output[0], y: options.output[1], z: options.output[2] };
+    } else if (options.output.length === 2) {
+      contextOutput = { x: options.output[0], y: options.output[1] };
     } else {
-      contextOutput = { x: options[0] };
+      contextOutput = { x: options.output[0] };
     }
   } else {
     contextOutput = options.output;
@@ -76,4 +77,4 @@ export default function gpuMock(fn, options) {
   } else {
     return mock1D.bind(context);
   }
-}
+};
