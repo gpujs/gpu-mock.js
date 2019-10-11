@@ -97,6 +97,11 @@ function apiDecorate(kernel) {
     kernel.context = flag;
     return kernel;
   };
+  kernel.destroy = () => {};
+  kernel.validateSettings = () => {};
+  if (kernel.graphical && kernel.output) {
+    setupGraphical(kernel);
+  }
   kernel.exec = function() {
     return new Promise((resolve, reject) => {
       try {
@@ -136,40 +141,32 @@ function apiDecorate(kernel) {
   };
 
   // these are added for api compatibility, but have no affect
-  kernel.setWarnVarUsage = () => {
-    return kernel;
-  };
-  kernel.setOptimizeFloatMemory = () => {
-    return kernel;
-  };
-  kernel.setArgumentTypes = () => {
-    return kernel;
-  };
-  kernel.setDebug = () => {
-    return kernel;
-  };
-  kernel.setLoopMaxIterations = () => {
-    return kernel;
-  };
-  kernel.setPipeline = () => {
-    return kernel;
-  };
-  kernel.setPrecision = () => {
-    return kernel;
-  };
-  kernel.setImmutable = () => {
-    return kernel;
-  };
-  kernel.setFunctions = () => {
-    return kernel;
-  };
-  kernel.addSubKernel = () => {
-    return kernel;
-  };
-  kernel.destroy = () => {};
-  kernel.validateSettings = () => {};
-  if (kernel.graphical && kernel.output) {
-    setupGraphical(kernel);
+  const mockMethod = () => kernel;
+  const methods = [
+    'setWarnVarUsage',
+    'setArgumentTypes',
+    'setTactic',
+    'setOptimizeFloatMemory',
+    'setDebug',
+    'setLoopMaxIterations',
+    'setConstantTypes',
+    'setFunctions',
+    'setNativeFunctions',
+    'setInjectedNative',
+    'setPipeline',
+    'setPrecision',
+    'setOutputToTexture',
+    'setImmutable',
+    'setStrictIntegers',
+    'setDynamicOutput',
+    'setHardcodeConstants',
+    'setDynamicArguments',
+    'setUseLegacyEncoder',
+    'setWarnVarUsage',
+    'addSubKernel',
+  ];
+  for (let i = 0; i < methods.length; i++) {
+    kernel[methods[i]] = mockMethod;
   }
   return kernel;
 }

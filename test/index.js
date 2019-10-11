@@ -163,7 +163,7 @@ describe('gpuMock', () => {
       it('sets value', () => {
         const constants = {};
         const kernel = gpuMock(function() {});
-        kernel.setConstants(constants);
+        assert.equal(kernel.setConstants(constants), kernel);
         assert.equal(kernel.constants, constants);
       });
     });
@@ -187,7 +187,7 @@ describe('gpuMock', () => {
       it('sets value', () => {
         const context = {};
         const kernel = gpuMock(function() {});
-        kernel.setContext(context);
+        assert.equal(kernel.setContext(context), kernel);
         assert.equal(kernel.context, context);
       });
     });
@@ -228,6 +228,48 @@ describe('gpuMock', () => {
         assert.equal(kernel.setArgumentTypes(), kernel);
       });
     });
+    describe('.setConstantTypes()', () => {
+      it('can be called and return kernel', () => {
+        const kernel = gpuMock(function() {});
+        assert.equal(kernel.setConstantTypes(), kernel);
+      });
+    });
+    describe('.setStrictIntegers()', () => {
+      it('can be called and return kernel', () => {
+        const kernel = gpuMock(function() {});
+        assert.equal(kernel.setStrictIntegers(), kernel);
+      });
+    });
+    describe('.setDynamicOutput()', () => {
+      it('can be called and return kernel', () => {
+        const kernel = gpuMock(function() {});
+        assert.equal(kernel.setDynamicOutput(), kernel);
+      });
+    });
+    describe('.setDynamicArguments()', () => {
+      it('can be called and return kernel', () => {
+        const kernel = gpuMock(function() {});
+        assert.equal(kernel.setDynamicArguments(), kernel);
+      });
+    });
+    describe('.setUseLegacyEncoder()', () => {
+      it('can be called and return kernel', () => {
+        const kernel = gpuMock(function() {});
+        assert.equal(kernel.setUseLegacyEncoder(), kernel);
+      });
+    });
+    describe('.setHardcodeConstants()', () => {
+      it('can be called and return kernel', () => {
+        const kernel = gpuMock(function() {});
+        assert.equal(kernel.setHardcodeConstants(), kernel);
+      });
+    });
+    describe('.setTactic()', () => {
+      it('can be called and return kernel', () => {
+        const kernel = gpuMock(function() {});
+        assert.equal(kernel.setTactic(), kernel);
+      });
+    });
     describe('.setDebug()', () => {
       it('can be called and return kernel', () => {
         const kernel = gpuMock(function() {});
@@ -252,6 +294,12 @@ describe('gpuMock', () => {
         assert.equal(kernel.setPrecision(), kernel);
       });
     });
+    describe('.setOutputToTexture()', () => {
+      it('can be called and return kernel', () => {
+        const kernel = gpuMock(function() {});
+        assert.equal(kernel.setOutputToTexture(), kernel);
+      });
+    });
     describe('.setImmutable()', () => {
       it('can be called and return kernel', () => {
         const kernel = gpuMock(function() {});
@@ -262,6 +310,18 @@ describe('gpuMock', () => {
       it('can be called and return kernel', () => {
         const kernel = gpuMock(function() {});
         assert.equal(kernel.setFunctions(), kernel);
+      });
+    });
+    describe('.setNativeFunctions()', () => {
+      it('can be called and return kernel', () => {
+        const kernel = gpuMock(function() {});
+        assert.equal(kernel.setNativeFunctions(), kernel);
+      });
+    });
+    describe('.setInjectedNative()', () => {
+      it('can be called and return kernel', () => {
+        const kernel = gpuMock(function() {});
+        assert.equal(kernel.setInjectedNative(), kernel);
       });
     });
     describe('.addSubKernel()', () => {
