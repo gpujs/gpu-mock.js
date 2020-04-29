@@ -1,6 +1,6 @@
 {
   "name": "gpu-mock.js",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A simple mocker for testing threaded development",
   "files": [
     "index.js"
@@ -31,5 +31,6 @@
   },
   "dependencies": {
     "gpu.js": "^2.9.3"
-  }
+  },
+  "typings": "./index.d.ts"
 }
