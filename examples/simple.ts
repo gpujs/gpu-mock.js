@@ -1,3 +1,4 @@
+import { Texture } from 'gpu.js';
 import { gpuMock } from '../index';
 
 class MockValue {
@@ -37,10 +38,10 @@ class MockValue {
     ];
   }
 }
-const results = gpuMock(function(value) {
+const results = gpuMock(function(value: number[][][]) {
   return value[this.thread.z][this.thread.y][this.thread.x];
 }, {
   output: [5, 5, 5]
-})(new MockValue());
+})(new MockValue() as Texture);
 
-console.log(results[0][0][0]);
+console.log((results as number[][][])[0][0][0]);
