@@ -352,7 +352,7 @@ describe('gpuMock', () => {
       })();
 
       assert.equal(results.constructor, Float32Array);
-      assert.deepEqual(results, [0,1,2,3,4]);
+      assert.deepEqual(results, Float32Array.from([0,1,2,3,4]));
     });
     it('can work with array', () => {
       const results = gpuMock(function(value) {
@@ -362,7 +362,7 @@ describe('gpuMock', () => {
       })([0,1,2,3,4]);
 
       assert.equal(results.constructor, Float32Array);
-      assert.deepEqual(results, [0,1,2,3,4]);
+      assert.deepEqual(results, Float32Array.from([0,1,2,3,4]));
     });
     it('can work with array like constructor that has .toArray() (like texture and input)', () => {
       class MockValue {
@@ -377,7 +377,7 @@ describe('gpuMock', () => {
       })(new MockValue());
 
       assert.equal(results.constructor, Float32Array);
-      assert.deepEqual(results, [0,1,2,3,4]);
+      assert.deepEqual(results, Float32Array.from([0,1,2,3,4]));
     });
   });
 
@@ -393,11 +393,11 @@ describe('gpuMock', () => {
       assert.equal(results[0].constructor, Float32Array);
       assert.deepEqual(results,
         [
-          [0,1,2,3,4],
-          [1,2,3,4,5],
-          [2,3,4,5,6],
-          [3,4,5,6,7],
-          [4,5,6,7,8]
+          Float32Array.from([0,1,2,3,4]),
+          Float32Array.from([1,2,3,4,5]),
+          Float32Array.from([2,3,4,5,6]),
+          Float32Array.from([3,4,5,6,7]),
+          Float32Array.from([4,5,6,7,8])
         ]
       );
     });
@@ -418,11 +418,11 @@ describe('gpuMock', () => {
       assert.equal(results[0].constructor, Float32Array);
       assert.deepEqual(results,
         [
-          [1,2,3,4,5],
-          [6,7,8,9,10],
-          [11,12,13,14,15],
-          [16,17,18,19,20],
-          [21,22,23,24,25],
+          Float32Array.from([1,2,3,4,5]),
+          Float32Array.from([6,7,8,9,10]),
+          Float32Array.from([11,12,13,14,15]),
+          Float32Array.from([16,17,18,19,20]),
+          Float32Array.from([21,22,23,24,25]),
         ]
       );
     });
@@ -448,11 +448,11 @@ describe('gpuMock', () => {
       assert.equal(results[0].constructor, Float32Array);
       assert.deepEqual(results,
         [
-          [1,2,3,4,5],
-          [6,7,8,9,10],
-          [11,12,13,14,15],
-          [16,17,18,19,20],
-          [21,22,23,24,25],
+          Float32Array.from([1,2,3,4,5]),
+          Float32Array.from([6,7,8,9,10]),
+          Float32Array.from([11,12,13,14,15]),
+          Float32Array.from([16,17,18,19,20]),
+          Float32Array.from([21,22,23,24,25]),
         ]
       );
     });
@@ -604,39 +604,39 @@ describe('gpuMock', () => {
       assert.deepEqual(results,
         [
           [
-            [0,1,2,3,4],
-            [1,2,3,4,5],
-            [2,3,4,5,6],
-            [3,4,5,6,7],
-            [4,5,6,7,8]
+            Float32Array.from([0,1,2,3,4]),
+            Float32Array.from([1,2,3,4,5]),
+            Float32Array.from([2,3,4,5,6]),
+            Float32Array.from([3,4,5,6,7]),
+            Float32Array.from([4,5,6,7,8])
           ],
           [
-            [1,2,3,4,5],
-            [2,3,4,5,6],
-            [3,4,5,6,7],
-            [4,5,6,7,8],
-            [5,6,7,8,9]
+            Float32Array.from([1,2,3,4,5]),
+            Float32Array.from([2,3,4,5,6]),
+            Float32Array.from([3,4,5,6,7]),
+            Float32Array.from([4,5,6,7,8]),
+            Float32Array.from([5,6,7,8,9])
           ],
           [
-            [2,3,4,5,6],
-            [3,4,5,6,7],
-            [4,5,6,7,8],
-            [5,6,7,8,9],
-            [6,7,8,9,10]
+            Float32Array.from([2,3,4,5,6]),
+            Float32Array.from([3,4,5,6,7]),
+            Float32Array.from([4,5,6,7,8]),
+            Float32Array.from([5,6,7,8,9]),
+            Float32Array.from([6,7,8,9,10])
           ],
           [
-            [3,4,5,6,7],
-            [4,5,6,7,8],
-            [5,6,7,8,9],
-            [6,7,8,9,10],
-            [7,8,9,10,11]
+            Float32Array.from([3,4,5,6,7]),
+            Float32Array.from([4,5,6,7,8]),
+            Float32Array.from([5,6,7,8,9]),
+            Float32Array.from([6,7,8,9,10]),
+            Float32Array.from([7,8,9,10,11])
           ],
           [
-            [4,5,6,7,8],
-            [5,6,7,8,9],
-            [6,7,8,9,10],
-            [7,8,9,10,11],
-            [8,9,10,11,12]
+            Float32Array.from([4,5,6,7,8]),
+            Float32Array.from([5,6,7,8,9]),
+            Float32Array.from([6,7,8,9,10]),
+            Float32Array.from([7,8,9,10,11]),
+            Float32Array.from([8,9,10,11,12])
           ]
         ]
       );
