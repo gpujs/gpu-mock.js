@@ -808,3 +808,32 @@ describe('gpuMock', () => {
     });
   });
 });
+
+describe('array-returning kernels (gpu.js#719)', () => {
+  it('returns a Float32Array per thread in 1D', () => {
+    const kernel = gpuMock(function() { return [1, 2, 3]; }, { output: [4] });
+    const result = kernel();
+    assert.equal(result.length, 4);
+    for (let x = 0; x < 4; x++) {
+      assert.ok(result[x] instanceof Float32Array);
+      assert.deepEqual(Array.from(result[x]), [1, 2, 3]);
+    }
+  });
+  it('returns a Float32Array per thread in 2D', () => {
+    const kernel = gpuMock(function() { return [this.thread.x, this.thread.y]; }, { output: [2, 2] });
+    const result = kernel();
+    assert.deepEqual(Array.from(result[1][0]), [0, 1]);
+    assert.ok(result[0][1] instanceof Float32Array);
+  });
+  it('returns a Float32Array per thread in 3D', () => {
+    const kernel = gpuMock(function() { return [this.thread.z]; }, { output: [1, 1, 2] });
+    const result = kernel();
+    assert.deepEqual(Array.from(result[1][0][0]), [1]);
+  });
+  it('still returns flat Float32Array for number kernels', () => {
+    const kernel = gpuMock(function() { return 7; }, { output: [3] });
+    const result = kernel();
+    assert.ok(result instanceof Float32Array);
+    assert.deepEqual(Array.from(result), [7, 7, 7]);
+  });
+});

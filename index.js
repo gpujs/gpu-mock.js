@@ -13,12 +13,18 @@ function setupArguments(args) {
 
 function mock1D() {
   const args = setupArguments(arguments);
-  const row = new Float32Array(this.output.x);
+  let row = null;
   for (let x = 0; x < this.output.x; x++) {
     this.thread.x = x;
     this.thread.y = 0;
     this.thread.z = 0;
-    row[x] = this._fn.apply(this, args);
+    const value = this._fn.apply(this, args);
+    if (row === null) {
+      // an array-returning kernel yields a Float32Array per thread, like the
+      // real backends; a number-returning kernel yields a flat Float32Array
+      row = typeof value === 'number' || typeof value === 'boolean' ? new Float32Array(this.output.x) : new Array(this.output.x);
+    }
+    row[x] = typeof value === 'object' ? new Float32Array(value) : value;
   }
   return row;
 }
@@ -27,12 +33,16 @@ function mock2D() {
   const args = setupArguments(arguments);
   const matrix = new Array(this.output.y);
   for (let y = 0; y < this.output.y; y++) {
-    const row = new Float32Array(this.output.x);
+    let row = null;
     for (let x = 0; x < this.output.x; x++) {
       this.thread.x = x;
       this.thread.y = y;
       this.thread.z = 0;
-      row[x] = this._fn.apply(this, args);
+      const value = this._fn.apply(this, args);
+      if (row === null) {
+        row = typeof value === 'number' || typeof value === 'boolean' ? new Float32Array(this.output.x) : new Array(this.output.x);
+      }
+      row[x] = typeof value === 'object' ? new Float32Array(value) : value;
     }
     matrix[y] = row;
   }
@@ -57,12 +67,16 @@ function mock3D() {
   for (let z = 0; z < this.output.z; z++) {
     const matrix = new Array(this.output.y);
     for (let y = 0; y < this.output.y; y++) {
-      const row = new Float32Array(this.output.x);
+      let row = null;
       for (let x = 0; x < this.output.x; x++) {
         this.thread.x = x;
         this.thread.y = y;
         this.thread.z = z;
-        row[x] = this._fn.apply(this, args);
+        const value = this._fn.apply(this, args);
+        if (row === null) {
+          row = typeof value === 'number' || typeof value === 'boolean' ? new Float32Array(this.output.x) : new Array(this.output.x);
+        }
+        row[x] = typeof value === 'object' ? new Float32Array(value) : value;
       }
       matrix[y] = row;
     }
