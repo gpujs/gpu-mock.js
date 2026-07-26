@@ -9,7 +9,8 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "coverage": "nyc mocha && nyc report --reporter=lcov"
+    "typecheck": "tsc --noEmit",
+    "coverage": "c8 --check-coverage --lines 100 --functions 100 --branches 100 --statements 100 mocha"
   },
   "repository": {
     "type": "git",
@@ -26,9 +27,13 @@
   },
   "homepage": "https://github.com/gpujs/gpu-mock.js#readme",
   "devDependencies": {
-    "mocha": "^6.1.4",
-    "nyc": "^14.1.1",
-    "sinon": "^7.3.2"
+    "c8": "^12.0.0",
+    "gpu.js": "^2.19.8",
+    "mocha": "^11.7.5",
+    "typescript": "^5.9.3"
+  },
+  "overrides": {
+    "node-gyp": "^11.5.0"
   },
   "peerDependencies": {
     "gpu.js": "^2.10.3"

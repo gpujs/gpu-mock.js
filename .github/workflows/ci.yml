@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install packages
+        run: npm ci
+
+      - name: Test with coverage
+        # index.js is fully covered today; the threshold keeps it that way
+        run: npm run coverage
+
+      - name: Typecheck
+        # checks examples/simple.ts against index.d.ts, so the published types
+        # cannot drift from what the examples claim they do
+        run: npm run typecheck
+
+      - name: Check the package contents
+        # the mock must stay dependency-free and ship only these two files
+        run: |
+          npm pack --dry-run --json > /tmp/pack.json
+          node -e "
+            const [pkg] = require('/tmp/pack.json');
+            const files = pkg.files.map(f => f.path).sort();
+            const expected = ['LICENSE', 'README.md', 'index.d.ts', 'index.js', 'package.json'].sort();
+            if (JSON.stringify(files) !== JSON.stringify(expected)) {
+              console.error('::error::published files changed: ' + files.join(', '));
+              process.exit(1);
+            }
+            const manifest = require('./package.json');
+            if (manifest.dependencies && Object.keys(manifest.dependencies).length) {
+              console.error('::error::this package must have no runtime dependencies');
+              process.exit(1);
+            }
+            console.log('ships:', files.join(', '));
+          "

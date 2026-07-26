@@ -1,4 +1,6 @@
 # gpu-mock.js
+
+[![CI](https://github.com/gpujs/gpu-mock.js/actions/workflows/ci.yml/badge.svg)](https://github.com/gpujs/gpu-mock.js/actions/workflows/ci.yml)
 A simple mocker for testing threaded development.
 
 ## GPU testing
