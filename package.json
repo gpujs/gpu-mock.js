@@ -33,7 +33,8 @@
     "typescript": "^5.9.3"
   },
   "overrides": {
-    "node-gyp": "^11.5.0"
+    "node-gyp": "^11.5.0",
+    "serialize-javascript": "^7.0.5"
   },
   "peerDependencies": {
     "gpu.js": "^2.10.3"
