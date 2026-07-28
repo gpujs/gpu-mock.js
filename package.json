@@ -28,7 +28,7 @@
   "homepage": "https://github.com/gpujs/gpu-mock.js#readme",
   "devDependencies": {
     "c8": "^12.0.0",
-    "gpu.js": "^2.19.8",
+    "gpu.js": "^2.19.9",
     "mocha": "^11.7.5",
     "typescript": "^5.9.3"
   },
